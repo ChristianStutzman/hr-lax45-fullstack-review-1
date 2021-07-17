@@ -1,5 +1,5 @@
 const db  = require('./index.js');
-const Student = require('./Student.js');
+const Student = require('./Student.js').Student;
 const mongoose = require('mongoose');
 db;
 

@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios';
+const server = 'http://localhost:3000';
 
 export default class App extends React.Component {
   constructor(props){
@@ -7,6 +9,8 @@ export default class App extends React.Component {
       page: 'home',
       studentlist : []
     }
+    this.getStudents = this.getStudents.bind(this);
+    this.changepage = this.changepage.bind(this);
   }
 
   componentDidMount(){
@@ -16,7 +20,14 @@ export default class App extends React.Component {
 
   getStudents(){
     // Todo: Add your code here to retrieve all students from the database
-
+    axios.get(`${server}/api/students`)
+      .then(data => {
+        console.log('student list:', data);
+        this.setState({
+          studentlist: data.data
+        })
+      })
+      .catch(err => {throw err})
   }
 
   changepage(e){
