@@ -1,5 +1,8 @@
 import React from 'react';
 import axios from 'axios';
+import Add from './Add.jsx';
+import List from './List.jsx';
+import Random from './Random.jsx';
 const server = 'http://localhost:3000';
 
 export default class App extends React.Component {
@@ -31,8 +34,9 @@ export default class App extends React.Component {
   }
 
   changepage(e){
-    // Todo: Add your logic to "change pages" here on button click
-
+    this.setState({
+      page: e.target.value
+    })
   }
 
   render() {
@@ -46,23 +50,23 @@ export default class App extends React.Component {
     } else if (this.state.page === 'list'){
       return (
         <div>
-          <List />
+          <List students={this.state.studentlist} />
           <button value='home'>Back</button>
         </div>
       )
     } else if (this.state.page === 'random'){
       return (
         <div>
-          <Random />
+          <Random students={this.state.studentlist} />
           <button value='home'>Back</button>
         </div>
       )
     } else {
       return (
         <div>
-          <button value='add'>Add Student</button>
-          <button value='list'>List Students</button>
-          <button value='random'>Random Student</button>
+          <button value='add' onClick={this.changepage}>Add Student</button>
+          <button value='list' onClick={this.changepage}>List Students</button>
+          <button value='random' onClick={this.changepage}>Random Student</button>
         </div>
       )
     }
