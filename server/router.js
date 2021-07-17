@@ -9,7 +9,6 @@ router
   .get((req, res, next) => {
     controller.students.getStudents()
       .then(data => {
-        console.log(data)
         res.statusCode = 200;
         res.json(data);
       })
@@ -19,7 +18,7 @@ router
       })
   })
   .post((req, res, next) => {
-    controller.students.postStudent()
+    controller.students.postStudent(req.body)
       .then(data => {
         res.statusCode = 201;
         res.json(data);

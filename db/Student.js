@@ -13,7 +13,12 @@ const getStudents = async () => {
   return await Student.find();
 };
 
+const postStudent = async (studentInfo) => {
+  return await Student.create(studentInfo);
+}
+
 module.exports = {
   Student,
-  getStudents
+  getStudents,
+  postStudent
 };
