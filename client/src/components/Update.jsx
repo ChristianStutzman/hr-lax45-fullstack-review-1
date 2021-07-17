@@ -1,18 +1,20 @@
 import React from 'react';
 import axios from 'axios';
 
-export default class Add extends React.Component {
+export default class Update extends React.Component {
   constructor(props){
     super(props)
     this.state = {
       name: '',
-      imgurl: ''
+      imgurl: '',
+      updatename: ''
     }
     this.getStudents = props.getStudents;
+    this.students = props.students;
     this.changeHandler = this.changeHandler.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.showPreview = this.showPreview.bind(this);
   }
+
 
   changeHandler(e){
     // Todo: Add your code here to handle the data the client inputs
@@ -25,9 +27,21 @@ export default class Add extends React.Component {
   handleSubmit(e){
     // Todo: Add your code here to handle the API requests to add a student
     e.preventDefault();
-    axios.post('http://localhost:3000/api/students', {
-      name: this.state.name,
-      imageUrl: this.state.imgurl
+    let name = this.state.updatename ? this.state.updatename : this.state.name;
+    let url, id;
+    for (let student of this.students) {
+      if (student.name === this.state.name) {
+        id = student._id;
+        url = this.state.imgurl ? this.state.imgurl : student.imageUrl;
+      }
+    }
+    let studentInfo = {
+      name: name,
+      imageUrl: url
+    };
+    axios.put(`http://localhost:3000/api/students/${id}`, {
+      studentInfo: studentInfo,
+      id: id
     })
       .then(res => {
         this.getStudents();
@@ -44,7 +58,7 @@ export default class Add extends React.Component {
       (this.state.name && this.state.imgurl) ? (
         <div>
           <img src={this.state.imgurl}></img>
-          <h2>{this.state.name}</h2>
+          <h2>{this.state.updatename || this.state.name}</h2>
         </div>
       ) : (
         <div>
@@ -54,14 +68,17 @@ export default class Add extends React.Component {
     )
   }
 
+
   render() {
     return (
       <div>
         <form>
-          <label>Student Name: </label>
+          <label>Student Name To Update: </label>
           <input type="text" name="name" onChange={this.changeHandler} />
-          <label>Image URL: </label>
-          <input type="text" name="imgurl" onChange={this.changeHandler} />
+          <label>New Student Name: </label>
+          <input type="text" name="updatename" placeholder="Same Value? Leave this blank" onChange={this.changeHandler} />
+          <label>New Image URL: </label>
+          <input type="text" name="imgurl" placeholder="Same Value? Leave this blank" onChange={this.changeHandler} />
           <button type="button" onClick={this.handleSubmit} >Submit</button>
         </form>
         <h1>Preview:</h1>

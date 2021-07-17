@@ -33,6 +33,17 @@ router
 // route for updating a student's name
 router
   .route('/students/:id')
+  .put((req, res, next) => {
+    controller.students.updateName(req.body)
+    .then(data => {
+      res.statusCode = 201;
+      res.json(data);
+    })
+    .catch(err => {
+      res.statusCode = 400;
+      res.json(err);
+    })
+  })
 
 
 module.exports = router;

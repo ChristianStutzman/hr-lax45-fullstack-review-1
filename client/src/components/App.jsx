@@ -3,6 +3,7 @@ import axios from 'axios';
 import Add from './Add.jsx';
 import List from './List.jsx';
 import Random from './Random.jsx';
+import Update from './Update.jsx';
 const server = 'http://localhost:3000';
 
 export default class App extends React.Component {
@@ -43,7 +44,7 @@ export default class App extends React.Component {
     if (this.state.page === 'add'){
       return (
         <div>
-          <Add />
+          <Add getStudents={this.getStudents} />
           <button value='home' onClick={this.changepage} >Back</button>
         </div>
       )
@@ -61,12 +62,20 @@ export default class App extends React.Component {
           <button value='home' onClick={this.changepage} >Back</button>
         </div>
       )
+    } else if (this.state.page === 'update') {
+      return (
+        <div>
+          <Update getStudents={this.getStudents} students={this.state.studentlist} />
+          <button value='home' onClick={this.changepage} >Back</button>
+        </div>
+      )
     } else {
       return (
         <div>
           <button value='add' onClick={this.changepage}>Add Student</button>
           <button value='list' onClick={this.changepage}>List Students</button>
           <button value='random' onClick={this.changepage}>Random Student</button>
+          <button value='update' onClick={this.changepage}>Update Student</button>
         </div>
       )
     }

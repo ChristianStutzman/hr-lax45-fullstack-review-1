@@ -11,8 +11,9 @@ const controller = {
       return Student.postStudent(studentInfo);
 
     },
-    updateName: function (req, res) {
+    updateName: function (studentInfo) {
       // TODO: add your code here to update a student's name
+      return Student.updateStudent(studentInfo);
 
     }
   }

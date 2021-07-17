@@ -17,8 +17,14 @@ const postStudent = async (studentInfo) => {
   return await Student.create(studentInfo);
 }
 
+const updateStudent = async (studentInfo) => {
+  console.log(studentInfo)
+  return await Student.updateOne({_id: mongoose.Types.ObjectId(studentInfo.id)}, studentInfo.studentInfo);
+}
+
 module.exports = {
   Student,
   getStudents,
-  postStudent
+  postStudent,
+  updateStudent
 };
