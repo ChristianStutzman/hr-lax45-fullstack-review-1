@@ -1,6 +1,7 @@
 const db  = require('./index.js');
 const Student = require('./Student.js');
 const mongoose = require('mongoose');
+db;
 
 const sampleData = [
   {
@@ -81,5 +82,8 @@ const insertSampleData = function() {
   Student.create(sampleData)
     .then(() => mongoose.connection.close());
 };
-
-insertSampleData();
+let database = mongoose.connection;
+database.once('open', () => {
+  console.log('connected')
+  insertSampleData();
+});
